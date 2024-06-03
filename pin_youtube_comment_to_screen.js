@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pin Youtube Comment To Screen
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.0.0
 // @description  Pin Youtube Comment To Screen
 // @author       RafalBerezin
 // @match        https://www.youtube.com/watch?*
@@ -41,7 +41,8 @@
     // CODE
 
     let pinnedComment = null;
-    let hoveredComment = null;
+    let hoveredNode = null;
+
     const commentNodeSelector = "ytd-comment-thread-renderer";
 
     function togglePin() {
@@ -50,7 +51,9 @@
     }
 
     function pin() {
+        const hoveredComment = getCommentNode(hoveredNode);
         if (!hoveredComment) return;
+
         pinnedComment = hoveredComment;
         pinnedComment.classList.add(pinnedClass);
     }
@@ -72,7 +75,7 @@
 
     if (useKeybinds) {
         window.addEventListener('mouseover', e => {
-            hoveredComment = getCommentNode(e.target);
+            hoveredNode = e.target;
         });
 
         window.addEventListener('keydown', e => {
