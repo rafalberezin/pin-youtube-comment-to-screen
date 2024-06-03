@@ -47,27 +47,29 @@
     const commentNodeSelector = "ytd-comment-thread-renderer";
 
     function togglePin() {
-        if (!pinnedComment || unpin()) pin();
+        const hoveredComment = getCommentNode(hoveredNode);
+
+        if (!hoveredComment) return unpin();
+        if (!pinnedComment) return pin(hoveredComment);
+
+        const currentPinIsHovered = hoveredComment === pinnedComment;
+        if (currentPinIsHovered) return hidden ? toggleHide() : unpin();
+        
+        unpin();
+        pin(hoveredComment);
     }
 
-    function pin() {
-        const hoveredComment = getCommentNode(hoveredNode);
-        if (!hoveredComment) return;
-
-        pinnedComment = hoveredComment;
+    function pin(element) {
+        pinnedComment = element;
         pinnedComment.classList.add(pinnedClass);
     }
 
     function unpin() {
-        if (!pinnedComment) return false;
-
-        const wasHidden = hidden;
-        if (wasHidden) toggleHide();
+        if (!pinnedComment) return;
 
         pinnedComment.classList.remove(pinnedClass);
+        if (hidden) toggleHide();
         pinnedComment = null;
-
-        return wasHidden;
     }
 
     function getCommentNode(element) {
