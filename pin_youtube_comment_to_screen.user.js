@@ -5,6 +5,8 @@
 // @description  Pin Youtube Comment To Screen
 // @author       RafalBerezin
 // @match        https://www.youtube.com/watch?*
+// @updateURL    https://github.com/RafalBerezin/pin_youtube_comment_to_screen/raw/master/pin_youtube_comment_to_screen.user.js
+// @downloadURL  https://github.com/RafalBerezin/pin_youtube_comment_to_screen/raw/master/pin_youtube_comment_to_screen.user.js
 // ==/UserScript==
 
 (function () {
