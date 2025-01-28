@@ -10,18 +10,17 @@
 // ==/UserScript==
 
 (function () {
+	// CONFIG
 
-    // CONFIG
+	// No alternative way for now. Maybe I'll add buttons to the comments in the future.
+	const useKeybinds = true;
+	const pinKeybind = "p";
+	const hideKeybind = "h";
 
-    // No alternative way for now. Maybe I'll add buttons to the comments in the future.
-    const useKeybinds = true;
-    const pinKeybind = "p";
-    const hideKeybind = "h";
+	const pinnedClass = "pinnedComment";
+	const hiddenClass = "hidePin";
 
-    const pinnedClass = "pinnedComment";
-    const hiddenClass = "hidePin";
-
-    const style = `
+	const style = `
         .${pinnedClass}:not(.${hiddenClass}) {
             position: fixed !important;
             right: 0;
@@ -40,65 +39,67 @@
         }
     `;
 
-    // CODE
+	// CODE
 
-    let pinnedComment = null;
-    let hoveredNode = null;
-    let hidden = false;
+	let pinnedComment = null;
+	let hoveredNode = null;
+	let hidden = false;
 
-    const commentNodeSelector = "ytd-comment-thread-renderer";
+	const commentNodeSelector = "ytd-comment-thread-renderer";
 
-    function togglePin() {
-        const hoveredComment = getCommentNode(hoveredNode);
+	function togglePin() {
+		const hoveredComment = getCommentNode(hoveredNode);
 
-        if (!hoveredComment) return unpin();
-        if (!pinnedComment) return pin(hoveredComment);
+		if (!hoveredComment) return unpin();
+		if (!pinnedComment) return pin(hoveredComment);
 
-        const currentPinIsHovered = hoveredComment === pinnedComment;
-        if (currentPinIsHovered) return hidden ? toggleHide() : unpin();
-        
-        unpin();
-        pin(hoveredComment);
-    }
+		const currentPinIsHovered = hoveredComment === pinnedComment;
+		if (currentPinIsHovered) return hidden ? toggleHide() : unpin();
 
-    function pin(element) {
-        pinnedComment = element;
-        pinnedComment.classList.add(pinnedClass);
-    }
+		unpin();
+		pin(hoveredComment);
+	}
 
-    function unpin() {
-        if (!pinnedComment) return;
+	function pin(element) {
+		pinnedComment = element;
+		pinnedComment.classList.add(pinnedClass);
+	}
 
-        pinnedComment.classList.remove(pinnedClass);
-        if (hidden) toggleHide();
-        pinnedComment = null;
-    }
+	function unpin() {
+		if (!pinnedComment) return;
 
-    function getCommentNode(element) {
-        return element.matches(commentNodeSelector) ? element : element.closest(commentNodeSelector);
-    }
+		pinnedComment.classList.remove(pinnedClass);
+		if (hidden) toggleHide();
+		pinnedComment = null;
+	}
 
-    function toggleHide() {
-        if (!pinnedComment) return;
+	function getCommentNode(element) {
+		return element.matches(commentNodeSelector)
+			? element
+			: element.closest(commentNodeSelector);
+	}
 
-        hidden = !hidden;
-        pinnedComment.classList.toggle(hiddenClass, hidden);
-    }
+	function toggleHide() {
+		if (!pinnedComment) return;
 
-    if (useKeybinds) {
-        window.addEventListener('mouseover', e => {
-            hoveredNode = e.target;
-        });
+		hidden = !hidden;
+		pinnedComment.classList.toggle(hiddenClass, hidden);
+	}
 
-        window.addEventListener('keydown', e => {
-            const key = e.key.toLowerCase();
+	if (useKeybinds) {
+		window.addEventListener("mouseover", (e) => {
+			hoveredNode = e.target;
+		});
 
-            if (key === pinKeybind) return togglePin();
-            if (key === hideKeybind) return toggleHide();
-        });
-    }
+		window.addEventListener("keydown", (e) => {
+			const key = e.key.toLowerCase();
 
-    document.head.appendChild(document.createElement("style")).innerHTML = style;
+			if (key === pinKeybind) return togglePin();
+			if (key === hideKeybind) return toggleHide();
+		});
+	}
 
-    console.log("[Pin Comment] Script Initialized");
+	document.head.appendChild(document.createElement("style")).innerHTML = style;
+
+	console.log("[Pin Comment] Script Initialized");
 })();
