@@ -10,4 +10,4 @@ A simple user script to keep a YouTube comment pinned on top of the window.
 ## Installation
 
 1. Install a user script manager, like [Tampermonkey](https://www.tampermonkey.net/), if you haven't already.
-2. Click [HERE](https://github.com/RafalBerezin/pin_youtube_comment_to_screen/raw/master/pin_youtube_comment_to_screen.user.js) to open the script in the extension and press **Install**.
+2. Click [HERE](https://github.com/rafalberezin/pin-youtube-comment-to-screen/raw/master/pin_youtube_comment_to_screen.user.js) to open the script in the extension and press **Install**.

@@ -3,10 +3,10 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
 // @description  Pin Youtube Comment To Screen
-// @author       RafalBerezin
+// @author       Rafał Berezin
 // @match        https://www.youtube.com/watch?*
-// @updateURL    https://github.com/RafalBerezin/pin_youtube_comment_to_screen/raw/master/pin_youtube_comment_to_screen.user.js
-// @downloadURL  https://github.com/RafalBerezin/pin_youtube_comment_to_screen/raw/master/pin_youtube_comment_to_screen.user.js
+// @updateURL    https://github.com/rafalberezin/pin-youtube-comment-to-screen/raw/master/pin_youtube_comment_to_screen.user.js
+// @downloadURL  https://github.com/rafalberezin/pin-youtube-comment-to-screen/raw/master/pin_youtube_comment_to_screen.user.js
 // ==/UserScript==
 
 (function () {
