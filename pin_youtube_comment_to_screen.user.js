@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Pin Youtube Comment To Screen
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Pin Youtube Comment To Screen
 // @author       Rafał Berezin
 // @match        https://www.youtube.com/watch?*
@@ -86,6 +86,18 @@
 		pinnedComment.classList.toggle(hiddenClass, hidden);
 	}
 
+	function isTextEditableElement(element) {
+		if (!element) return false;
+
+		const tagName = element.tagName;
+		return (
+			tagName === "INPUT" ||
+			tagName === "TEXTAREA" ||
+			tagName === "SELECT" ||
+			element.isContentEditable
+		);
+	}
+
 	if (useKeybinds) {
 		window.addEventListener("mouseover", (e) => {
 			hoveredNode = e.target;
@@ -93,9 +105,11 @@
 
 		window.addEventListener("keydown", (e) => {
 			const key = e.key.toLowerCase();
+			if (key !== pinKeybind && key != hideKeybind) return;
+			if (isTextEditableElement(document.activeElement)) return;
 
-			if (key === pinKeybind) return togglePin();
-			if (key === hideKeybind) return toggleHide();
+			if (key === pinKeybind) togglePin();
+			else toggleHide();
 		});
 	}
 
